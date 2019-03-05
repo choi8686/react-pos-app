@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import productData from '../productData';
 import Button from '@material-ui/core/Button';
 
-export default class Categories extends React.Component{
+export default class Menu extends React.Component{
   constructor(props){
     super(props)
   }
@@ -19,14 +19,15 @@ export default class Categories extends React.Component{
           direction={'row'}
           justify={'space-evenly'}
         >
-        {productData.map((category) =>(
+        {/*{productData.map((category) =>(
           <Button variant="outlined" size="large" color="primary" className={'categoryBtn'}>
             {category.category}
           </Button>
           )
         )
-        }
+        }*/}
         </Grid>
+        <h3>Options</h3>
     </Grid>)
   }
 }

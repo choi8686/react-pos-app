@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Categories from './Components/Categories';
+import Menu from './Components/Menu';
 import Sidebar from "./Components/Sidebar";
 import './App.css';
+import productData from './productData';
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+    }
+  }
   render() {
     return (
       <Grid
@@ -13,8 +19,8 @@ class App extends Component {
         justify="space-around"
         alignItems="stretch"
       >
-        <Categories className={'Products'} style={{flex:'1'}}>
-        </Categories>
+        <Menu className={'Products'} style={{flex:'1'}}>
+        </Menu>
       <Sidebar style={{flex:'1'}}/>
       </Grid>
     );
