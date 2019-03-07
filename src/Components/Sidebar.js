@@ -17,6 +17,18 @@ export default class Sidebar extends React.Component{
     super(props)
   }
   render(){
+    const orderList = [];
+    const { currentOrder } = this.props;
+    console.log({currentOrder})
+    if (Object.keys(currentOrder).length){
+      for (let item in currentOrder){
+        orderList.push({
+          name:item,
+          price:currentOrder[item].price,
+          quantity:currentOrder[item].quantity,
+        })
+      };
+    }
     return(
       <Grid item xs={4} className={'Sidebar'} >
         <Typography variant="h6" className={'sidebartitle'}>
@@ -24,10 +36,28 @@ export default class Sidebar extends React.Component{
         </Typography>
         <div className={'order-list'}>
           <OrderList>
-
+            {orderList.map((item)=>(
+              <ListItem divider>
+                <DeleteIcon/>
+                <ListItemText>
+                {item.name}
+              </ListItemText>
+                <ListItemText>
+                  {item.quantity}
+                </ListItemText>
+                <ListItemText>
+                  {item.price}
+                </ListItemText>
+              </ListItem>
+            ))}
           </OrderList>
         </div>
-        <PaymentKeys/>
+        <PaymentKeys
+          totalPrice={this.props.totalPrice}
+          handleNumberClick={this.props.handleNumberClick}
+          handleDeleteNum={this.props.handleDeleteNum}
+          receivedMoney={this.props.receivedMoney}
+        />
       </Grid>
     )
 

@@ -10,10 +10,9 @@ class App extends Component {
     this.state = {
       currentCategory : productData[0].category,
       currentMenuItems : productData[0].items,
-      currentOrder: [],
+      currentOrder: {},
       totalPrice: 0,
-
-
+      receivedMoney:'0',
     }
   }
   handleCategoryClick = (event) => {
@@ -29,8 +28,42 @@ class App extends Component {
       currentMenuItems: newMenuItems[0].items,
     });
   };
-  handleAddClick = (event) => {
-    console.log(event.target.parentNode)
+  handleAddClick = (itemName,itemPrice) => {
+    const { currentOrder } = this.state;
+    if (currentOrder[itemName]){
+      currentOrder[itemName].quantity++;
+      currentOrder[itemName].price = currentOrder[itemName].quantity * itemPrice;
+    } else {
+      currentOrder[itemName] = {};
+      currentOrder[itemName].quantity = 1;
+      currentOrder[itemName].price = itemPrice;
+    }
+    this.setState({
+      currentOrder : currentOrder,
+    });
+    this.updateTotalPrice()
+  };
+  updateTotalPrice= ()=>{
+    let totalPrice = 0;
+    const { currentOrder } = this.state;
+    for (let item in currentOrder){
+      totalPrice += Number(currentOrder[item].price);
+    }
+    this.setState({
+      totalPrice: totalPrice
+    });
+  };
+  handleNumberClick = (e) => {
+    const num = e.target.textContent;
+    console.log({num})
+    this.setState({
+      receivedMoney: this.state.receivedMoney !== '0' ? this.state.receivedMoney + num : ''+num
+    })
+  };
+  handleDeleteNum = () => {
+    this.setState({
+      receivedMoney:'0'
+    })
   };
   render() {
     return (
@@ -47,9 +80,16 @@ class App extends Component {
               currentMenuItems={this.state.currentMenuItems}
               handleCategoryClick={this.handleCategoryClick}
               handleAddClick={this.handleAddClick}
+              receivedMoney={this.state.receivedMoney}
         >
         </Menu>
-      <Sidebar style={{flex:'1'}}/>
+      <Sidebar style={{flex:'1'}}
+               currentOrder={this.state.currentOrder}
+               totalPrice={this.state.totalPrice}
+               handleNumberClick={this.handleNumberClick}
+               handleDeleteNum={this.handleDeleteNum}
+               receivedMoney={this.state.receivedMoney}
+      />
       </Grid>
     );
   }

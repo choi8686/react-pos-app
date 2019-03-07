@@ -46,25 +46,6 @@ const RowButton = styled(Button)`
   margin:10px 10px;
 `;
 export default class PaymentKeys extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      receivedMoney : '0'
-    }
-  }
-  handleNumberClick = (e) => {
-    e.preventDefault();
-    const num = e.target.textContent;
-    this.setState({
-      receivedMoney: this.state.receivedMoney !== '0' ? this.state.receivedMoney + num : ''+num
-    })
-  };
-  handleDeleteNum = (e) => {
-    e.preventDefault();
-    this.setState({
-      receivedMoney:'0'
-    })
-  };
   render(){
     return(
       <div>
@@ -75,7 +56,7 @@ export default class PaymentKeys extends React.Component {
               primary="총 금액"
             />
             <ListItemText
-              primary="" // Change this!
+              primary={this.props.totalPrice+' 원'} // Change this!
             />
           </ListItem>
           <ListItem>
@@ -83,7 +64,7 @@ export default class PaymentKeys extends React.Component {
               primary="받은 돈"
             />
             <ListItemText
-              primary={`${this.state.receivedMoney} 원`} // Change this!
+              primary={`${this.props.receivedMoney} 원`} // Change this!
             />
           </ListItem>
           <ListItem>
@@ -98,35 +79,35 @@ export default class PaymentKeys extends React.Component {
       </Payment>
       <ControlPanel>
         <Row>
-          <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+          <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
             7
           </RowButton>
-          <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+          <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
             8
           </RowButton>
-          <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+          <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
             9
           </RowButton>
         </Row>
         <Row>
-          <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+          <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
             4
           </RowButton>
-          <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+          <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
             5
           </RowButton>
-          <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+          <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
             6
           </RowButton>
         </Row>
         <Row>
-        <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+        <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
           1
         </RowButton>
-        <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+        <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
           2
         </RowButton>
-        <RowButton variant='contained' onClick={this.handleNumberClick} color="secondary" className={'number'}>
+        <RowButton variant='contained' onClick={this.props.handleNumberClick} color="secondary" className={'number'}>
           3
         </RowButton>
       </Row>
@@ -134,7 +115,7 @@ export default class PaymentKeys extends React.Component {
           <RowButton variant='contained' color="secondary" className={'number'}>
             0
           </RowButton>
-          <RowButton variant='contained' onClick={this.handleDeleteNum} color="default" id={'deleteNumber'}>
+          <RowButton variant='contained' onClick={this.props.handleDeleteNum} color="default" id={'deleteNumber'}>
             삭제
           </RowButton>
           <RowButton variant='contained' color="primary" className={'payButton'}>

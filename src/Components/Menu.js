@@ -69,17 +69,15 @@ export default class Menu extends React.Component{
           justify={'space-evenly'}
         >
           {this.props.currentMenuItems.map((item)=>(
-            <MenuCard>
+            <MenuCard item={item.name} price={item.price}>
               <MenuImage src={item.img}/>
               <p>{item.name}</p>
-              <p>{item.price}</p>
+              <p>{item.price}원</p>
               <Fab color="secondary"
                    aria-label="Add"
                    variant={'extended'}
                    size={'small'}
-                   onClick={this.props.handleAddClick}
-                   item={item.name}
-                   price={item.price}
+                   onClick={(e)=> this.props.handleAddClick(item.name,item.price)}
               >
                 <AddIcon />
                 추가
