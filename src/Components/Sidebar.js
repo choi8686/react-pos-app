@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import IconButton from '@material-ui/core/IconButton';
 import ListItemText from '@material-ui/core/ListItemText';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PaymentKeys from './PaymentKeys';
@@ -19,7 +19,6 @@ export default class Sidebar extends React.Component{
   render(){
     const orderList = [];
     const { currentOrder } = this.props;
-    console.log({currentOrder})
     if (Object.keys(currentOrder).length){
       for (let item in currentOrder){
         orderList.push({
@@ -38,7 +37,15 @@ export default class Sidebar extends React.Component{
           <OrderList>
             {orderList.map((item)=>(
               <ListItem divider>
-                <DeleteIcon/>
+                <IconButton
+                  size="small"
+                  onClick={(e)=>this.props.deleteOrderItem(item)}
+                >
+                <DeleteIcon
+                  color={'action'}
+
+                />
+                </IconButton>
                 <ListItemText>
                 {item.name}
               </ListItemText>
@@ -57,6 +64,8 @@ export default class Sidebar extends React.Component{
           handleNumberClick={this.props.handleNumberClick}
           handleDeleteNum={this.props.handleDeleteNum}
           receivedMoney={this.props.receivedMoney}
+          returnMoney={this.props.returnMoney}
+          openReceipt={this.props.openReceipt}
         />
       </Grid>
     )

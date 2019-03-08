@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Menu from './Components/Menu';
 import Sidebar from "./Components/Sidebar";
+import Receipt from './Components/Receipt';
 import './App.css';
 import productData from './productData';
 class App extends Component {
@@ -13,6 +14,8 @@ class App extends Component {
       currentOrder: {},
       totalPrice: 0,
       receivedMoney:'0',
+      returnMoney:0,
+      openReceipt:false,
     }
   }
   handleCategoryClick = (event) => {
@@ -37,11 +40,14 @@ class App extends Component {
       currentOrder[itemName] = {};
       currentOrder[itemName].quantity = 1;
       currentOrder[itemName].price = itemPrice;
+      currentOrder[itemName].individualPrice = itemPrice;
     }
     this.setState({
       currentOrder : currentOrder,
+    },()=>{
+      this.updateTotalPrice();
+      this.updateReturnMoney();
     });
-    this.updateTotalPrice()
   };
   updateTotalPrice= ()=>{
     let totalPrice = 0;
@@ -51,19 +57,66 @@ class App extends Component {
     }
     this.setState({
       totalPrice: totalPrice
+    },()=>{
+      this.updateReturnMoney();
     });
+
   };
   handleNumberClick = (e) => {
     const num = e.target.textContent;
-    console.log({num})
     this.setState({
       receivedMoney: this.state.receivedMoney !== '0' ? this.state.receivedMoney + num : ''+num
-    })
+    },() => {
+      this.updateReturnMoney()
+    });
+
   };
   handleDeleteNum = () => {
     this.setState({
-      receivedMoney:'0'
+      receivedMoney:'0',
+      returnMoney:0,
+    });
+  };
+  updateReturnMoney = () => {
+    const returnMoney = Number(this.state.receivedMoney)-Number(this.state.totalPrice);
+    if (returnMoney > 0){
+      this.setState({
+        returnMoney: returnMoney,
+      })
+    }
+  };
+  deleteOrderItem = (item) => {
+    let { currentOrder } = this.state;
+    if (item.quantity > 1){
+      currentOrder[item.name].quantity--;
+      currentOrder[item.name].price = currentOrder[item.name].quantity * currentOrder[item.name].individualPrice;
+    } else {
+      delete currentOrder[item.name];
+    };
+    this.setState({
+      currentOrder: currentOrder,
+    }, () => {
+      this.updateTotalPrice();
+      this.updateReturnMoney();
     })
+  };
+  openReceipt = () => {
+    this.setState({
+        openReceipt:true,
+      })
+  };
+  closeReceipt = () => {
+    this.setState({
+      openReceipt:false,
+    })
+  };
+  finishPayment = () => {
+    this.setState({
+      currentOrder: {},
+      totalPrice: 0,
+      receivedMoney:'0',
+      returnMoney:0,
+    },()=>this.closeReceipt())
   };
   render() {
     return (
@@ -89,6 +142,15 @@ class App extends Component {
                handleNumberClick={this.handleNumberClick}
                handleDeleteNum={this.handleDeleteNum}
                receivedMoney={this.state.receivedMoney}
+               returnMoney={this.state.returnMoney}
+               deleteOrderItem={this.deleteOrderItem}
+               openReceipt={this.openReceipt}
+      />
+      <Receipt open={this.state.openReceipt}
+               currentOrder={this.state.currentOrder}
+               close={this.closeReceipt}
+               totalPrice={this.state.totalPrice}
+               finish={this.finishPayment}
       />
       </Grid>
     );

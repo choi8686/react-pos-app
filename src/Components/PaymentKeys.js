@@ -72,7 +72,7 @@ export default class PaymentKeys extends React.Component {
               primary="거스름 돈"
             />
             <ListItemText
-              primary="" // Change this!
+              primary={`${this.props.returnMoney} 원`}
             />
           </ListItem>
         </PaymentList>
@@ -112,13 +112,13 @@ export default class PaymentKeys extends React.Component {
         </RowButton>
       </Row>
         <Row>
-          <RowButton variant='contained' color="secondary" className={'number'}>
+          <RowButton variant='contained' color="secondary" className={'number'} onClick={this.props.handleNumberClick}>
             0
           </RowButton>
           <RowButton variant='contained' onClick={this.props.handleDeleteNum} color="default" id={'deleteNumber'}>
             삭제
           </RowButton>
-          <RowButton variant='contained' color="primary" className={'payButton'}>
+          <RowButton variant='contained' color="primary" className={'payButton'} onClick={this.props.openReceipt}>
             결제
           </RowButton>
         </Row>
