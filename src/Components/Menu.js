@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import Grid from '@material-ui/core/Grid';
 import productData from '../productData';
 import Button from '@material-ui/core/Button';
@@ -8,6 +8,7 @@ export default class Menu extends React.Component{
     super(props)
   }
   render(){
+    
     return(
       <Grid item xs={8} className={'Products'}>
       <h2>Categories</h2>
@@ -18,11 +19,27 @@ export default class Menu extends React.Component{
           alignItems={'center'}
           direction={'row'}
           justify={'space-evenly'}
-        >{
-          // FILL ME IN
+        >
+       
+        
+        {
+          productData.map(function(object, i){
+            return <Button variant="contained" color="secondary" value={i} onClick={()=>this.props.handleCategoryClick}>
+        {object.category}
+      </Button>
+      
+            
+          })
         }
+
         </Grid>
-        <h3>Options</h3>
+        {
+          this.props.currentCategory.items.map(function(object){
+            return <h1>{object.name}</h1>
+          })
+        }
+        
+        
     </Grid>)
   }
 }

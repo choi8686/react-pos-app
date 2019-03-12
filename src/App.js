@@ -11,8 +11,18 @@ class App extends Component {
       totalPrice: 0,
       receivedMoney:'0',
       returnMoney:0,
+      currentCategory: productData[0],
+
     }
   }
+
+  handleCategoryClick = (index) => {
+    
+    this.setState({
+      currentCategory: productData[index]
+    })
+  }
+
   updateReturnMoney = () => {
     const returnMoney = Number(this.state.receivedMoney)-Number(this.state.totalPrice);
     if (returnMoney > 0){
@@ -45,7 +55,8 @@ class App extends Component {
         justify="space-around"
         alignItems="stretch"
       >
-        <Menu className={'Products'} style={{flex:'1'}}>
+        <Menu className={'Products'} style={{flex:'1'}} currentCategory={this.state.currentCategory} handleCategoryClick={this.handleCategoryClick.bind(this)}>
+
         </Menu>
       <Sidebar
         style={{flex:'1'}}
