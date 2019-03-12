@@ -27,7 +27,13 @@ export default class Sidebar extends React.Component{
 
           </OrderList>
         </div>
-        <PaymentKeys/>
+        <PaymentKeys
+          totalPrice={this.props.totalPrice}
+          handleNumberClick={this.props.handleNumberClick}
+          handleDeleteNum={this.props.handleDeleteNum}
+          receivedMoney={this.props.receivedMoney}
+          returnMoney={this.props.returnMoney}
+        />
       </Grid>
     )
 

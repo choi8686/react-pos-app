@@ -18,14 +18,9 @@ export default class Menu extends React.Component{
           alignItems={'center'}
           direction={'row'}
           justify={'space-evenly'}
-        >
-        {/*{productData.map((category) =>(
-          <Button variant="outlined" size="large" color="primary" className={'categoryBtn'}>
-            {category.category}
-          </Button>
-          )
-        )
-        }*/}
+        >{
+          // FILL ME IN
+        }
         </Grid>
         <h3>Options</h3>
     </Grid>)
